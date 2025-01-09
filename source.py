@@ -33,16 +33,6 @@ def ensure_folder_exists(folder_path):
 # Get the current user's home directory
 user_home = os.path.expanduser("~")
 
-# Define the path to the WareStore folder in AppData\Local
-icon_folder = os.path.join(user_home, "AppData", "Local", "WareStore").replace("\\", "/")
-
-def download_icon(url, save_path):
-    print(f"Downloading icon from {url} to {save_path}")
-    response = requests.get(url)
-    response.raise_for_status()
-    with open(save_path, 'wb') as f:
-        f.write(response.content)
-
 class App(customtkinter.CTk):
     def __init__(self, dev_mode=False):
         super().__init__()
@@ -96,17 +86,6 @@ class App(customtkinter.CTk):
         )
         self.terminal_output.pack(pady=(0, 0), fill="both", expand=True)
         self.terminal_output.configure(state="disabled")
-
-        # Icon handling
-        icon_path = os.path.join(icon_folder, "warestore.ico")
-        if not os.path.exists(icon_path):
-            print(f"Preparing to download the icon to {icon_path}")
-            download_icon("https://bet3rd.com/warestore/warestore.ico", icon_path)
-        else:
-            print(f"Icon already exists at {icon_path}, skipping download.")
-
-        # Set icon after a short delay
-        self.after(200, lambda: self.iconbitmap(icon_path))
 
     def reset_steam(self):
         path = self.get_steam_install_path()
