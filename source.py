@@ -10,7 +10,6 @@ import shutil
 import winreg
 import os
 import time
-import requests
 import customtkinter
 import tkinter
 import win32crypt
